@@ -84,7 +84,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         painter = painterResource(id = R.drawable.message_left),
                         contentDescription = null,
                         modifier = Modifier
-                            .scale(scaleX = 1.5f, scaleY = 1f)
+                            .scale(scaleX = 1.8f, scaleY = 1.2f)
                             .align(alignment = Alignment.Center)
                     )
                     Text(
