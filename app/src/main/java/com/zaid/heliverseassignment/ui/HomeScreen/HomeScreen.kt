@@ -9,11 +9,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,8 +23,10 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,7 +38,10 @@ import com.zaid.heliverseassignment.ui.theme.HeliverseAssignmentTheme
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
 
+    val screenWidth = LocalConfiguration.current.screenWidthDp
+    val screenHeight = LocalConfiguration.current.screenHeightDp
     val context = LocalContext.current
+
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.background),
@@ -49,96 +53,100 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             painter = painterResource(id = R.drawable.platform),
             contentDescription = null,
             modifier = Modifier
-                .width(400.dp)
-                .height(100.dp)
+                .fillMaxWidth()
+                .fillMaxHeight(0.1f)
                 .align(alignment = Alignment.BottomCenter)
         )
 
         Column(
             modifier = Modifier
-                .width(500.dp)
+                .padding(bottom = (screenHeight / 15).dp)
+                .fillMaxSize()
                 .align(alignment = Alignment.BottomCenter)
+
         ) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = null,
                 modifier = Modifier
-                    .wrapContentSize()
-                    .padding(20.dp),
+                    .fillMaxWidth(0.5f)
+                    .fillMaxHeight(0.14f)
+                    .padding((screenWidth / 15).dp),
                 contentScale = ContentScale.Crop
             )
+
             Box(
                 modifier = Modifier
-                    .weight(1f)
-                    .width(600.dp)
-                    .padding(bottom = 60.dp)
+                    .fillMaxHeight()
             ) {
-
                 Box(
                     modifier = Modifier
-                        .padding(top = 50.dp)
-                        .width(360.dp)
-                        .height(50.dp)
+                        .padding(top = (screenHeight / 18).dp)
+                        .fillMaxWidth(1.2f)
+                        .fillMaxHeight(0.07f)
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.message_left),
                         contentDescription = null,
                         modifier = Modifier
-                            .scale(scaleX = 1.8f, scaleY = 1.2f)
+                            .scale(scaleX = 1.9f, scaleY = 1.3f)
                             .align(alignment = Alignment.Center)
                     )
-                    Text(
+
+                    AutoResizedText(
                         text = "Are U 14 Years Or Older?",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontStyle = FontStyle(FontStyle.Italic.value),
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontStyle = FontStyle.Italic
+                        ),
                         color = Color(0xFFBA04B0),
                         modifier = Modifier
-                            .padding(top = 5.dp)
+                            .padding(top = (screenHeight / 250).dp)
                             .align(alignment = Alignment.TopCenter)
                     )
                 }
 
                 Box(
                     modifier = Modifier
-                        .padding(end = 5.dp)
+                        .padding(end = (screenWidth / 80).dp)
                         .align(alignment = Alignment.CenterEnd)
-                        .width(250.dp)
-                        .height(300.dp)
+                        .fillMaxWidth(0.65f)
+                        .fillMaxHeight(0.46f)
                         .shadow(
-                            elevation = 10.dp,
+                            elevation = 9.dp,
                             spotColor = Color(0xFFFFEB3B),
-                            shape = RoundedCornerShape(35.dp)
+                            shape = RoundedCornerShape(20)
                         )
-                        .padding(20.dp)
-                        .clip(RoundedCornerShape(35.dp)),
+                        .padding(top = 10.dp, start = 10.dp, end = 10.dp)
+                        .clip(RoundedCornerShape(20)),
                 ) {
                     Column(
                         modifier = Modifier
+                            .clip(RoundedCornerShape(20))
                             .border(
                                 border = BorderStroke(width = 2.dp, color = Color(0xFFFFEB3B)),
-                                shape = RoundedCornerShape(35.dp)
+                                shape = RoundedCornerShape(20)
                             )
                             .fillMaxSize()
                             .background(Color(0xFFBA04B0)),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceAround
+                        verticalArrangement = Arrangement.SpaceEvenly
                     ) {
-
-                        Text(
+                        AutoResizedText(
                             text = "By Clicking Continue, I\nAgree That I Am Least\n14 Years Old",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            fontStyle = FontStyle(FontStyle.Italic.value),
+                            style = TextStyle(
+                                lineHeight = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontStyle = FontStyle.Italic
+                            ),
                             color = Color.White,
                             modifier = Modifier.padding(8.dp)
                         )
-
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(50))
-                                .width(160.dp)
-                                .height(48.dp)
+                                .fillMaxWidth(0.7f)
+                                .fillMaxHeight(0.3f)
                                 .clickable {
                                     Toast
                                         .makeText(context, "Yes", Toast.LENGTH_SHORT)
@@ -152,7 +160,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                             )
                             Text(
                                 text = "Yes, Continue",
-                                fontSize = 16.sp,
+                                fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White,
                                 fontStyle = FontStyle(FontStyle.Italic.value),
@@ -163,8 +171,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(50))
-                                .width(160.dp)
-                                .height(48.dp)
+                                .fillMaxWidth(0.7f)
+                                .fillMaxHeight(0.4f)
                                 .clickable {
                                     Toast
                                         .makeText(context, "No", Toast.LENGTH_SHORT)
@@ -179,7 +187,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                             )
                             Text(
                                 text = "No, I'm Not 14",
-                                fontSize = 16.sp,
+                                fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold,
                                 fontStyle = FontStyle(FontStyle.Italic.value),
                                 modifier = Modifier.align(Alignment.Center),
@@ -193,9 +201,10 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                     painter = painterResource(id = R.drawable.img_girl),
                     contentDescription = null,
                     modifier = Modifier
-                        .padding(top = 100.dp)
+                        .padding(top = (screenHeight / 8.8).dp)
                         .scale(-1f, 1f)
-                        .width(170.dp)
+                        .fillMaxWidth(0.45f)
+                        .fillMaxHeight(1f)
                         .align(alignment = Alignment.BottomStart),
                     contentScale = ContentScale.Crop
                 )
